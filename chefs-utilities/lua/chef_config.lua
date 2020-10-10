@@ -106,6 +106,9 @@ chef.load.moderatorWeapons = true
 --Stop players from commiting suicide via console 'kill'
 chef.load.stopSuicide = true
 
+--Hide the death notice in the top right when someone dies
+chef.load.hideDeaths = true
+
 --Load custom chat commands
 chef.load.chatCommands = true
 --Should the command (ex. !forum) be shown in chat?

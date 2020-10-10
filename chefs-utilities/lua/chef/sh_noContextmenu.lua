@@ -4,7 +4,7 @@
 if CLIENT then
 
   hook.Add("ContextMenuOpen","chef_nocontextmenu",function()
-    if chef.groups[ply:GetUserGroup()] ~= nil then 
+    if chef.groups[LocalPlayer():GetUserGroup()] ~= nil then 
       return true 
     else
       return false

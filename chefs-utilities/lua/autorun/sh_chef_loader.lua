@@ -153,6 +153,16 @@ if (chef.load.betterAFK) then
   print("[chef] Chef's better afk loaded!")
 end
 
+if (chef.load.hideDeaths) then
+  if CLIENT then
+    local GM = GM or GAMEMODE or gmod.GetGamemode()
+    function GM:DrawDeathNotice(x, y)
+      return false
+    end
+  end
+  print("[chef] Chef's Hide Deaths loaded!")
+end
+
 if (chef.load.cac) then
   if SERVER then
     AddCSLuaFile("chef/cl_cac.lua")
@@ -162,7 +172,6 @@ if (chef.load.cac) then
     include("chef/cl_cac.lua")
   end
   print("[chef] Chef's Anti Cheat loaded!")
-
 end
 
 print("[chef] Everything loaded!")

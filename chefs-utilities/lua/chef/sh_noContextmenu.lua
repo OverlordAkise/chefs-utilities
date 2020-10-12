@@ -2,7 +2,7 @@
 --made by OverlordAkise
 
 if CLIENT then
-
+--[[
   hook.Add("ContextMenuOpen","chef_nocontextmenu",function()
     if chef.groups[LocalPlayer():GetUserGroup()] ~= nil then 
       return true 
@@ -10,7 +10,7 @@ if CLIENT then
       return false
     end
   end)
-
+--]]
 else
 
   hook.Add("PostGamemodeLoaded","chef_nocontextmenu",function()

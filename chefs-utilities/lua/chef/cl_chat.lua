@@ -316,14 +316,6 @@ function chat.AddText(...)
 			eChat.chatLog:InsertColorChange( obj.r, obj.g, obj.b, obj.a )
 			table.insert( msg, Color(obj.r, obj.g, obj.b, obj.a) )
 		elseif type(obj) == "string"  then
-      if k==1 and string.find(obj,LocalPlayer():Nick()) then
-        if eChat.config.useTags then
-          local col = chefGetChatColor(ply:GetUserGroup())
-          local tbl = string.Explode(" ", col )
-          eChat.chatLog:InsertColorChange( col.r, col.g, col.b, 255 )
-          eChat.chatLog:AppendText(chefGetChatTag(ply:GetUserGroup()))
-        end
-      end
 			eChat.chatLog:AppendText( obj )
 			table.insert( msg, obj )
 		elseif obj:IsPlayer() then

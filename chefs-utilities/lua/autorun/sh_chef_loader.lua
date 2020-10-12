@@ -155,8 +155,7 @@ end
 
 if (chef.load.hideDeaths) then
   if CLIENT then
-    local GM = GM or GAMEMODE or gmod.GetGamemode()
-    function GM:DrawDeathNotice(x, y)
+    function GAMEMODE:DrawDeathNotice(x, y)
       return false
     end
   end

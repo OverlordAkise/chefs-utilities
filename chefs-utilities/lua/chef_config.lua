@@ -34,6 +34,7 @@ chef.load.cac = true
 
 --A new black chatbox which has more features
 chef.load.chatBox = true
+
 chef.chatTags = {
   ["superadmin"] = "[Superadmin]",
   ["admin"] = "[Admin]",

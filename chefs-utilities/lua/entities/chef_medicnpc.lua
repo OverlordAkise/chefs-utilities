@@ -16,7 +16,7 @@ ENT.Spawnable = true
 ENT.AdminSpawnable = false
 ENT.Category = "DarkRP (NPCs)"
 
-
+--Prices for healing
 chef_medic_25 = 2500
 chef_medic_50 = 5000
 chef_medic_100 = 10000
@@ -25,7 +25,9 @@ chef_medic_100 = 10000
 if SERVER then
   util.AddNetworkString("chef_medic")
   net.Receive("chef_medic",function(len,ply)
-    if ply:Health() == ply:GetMaxHealth() then
+    --local mednpc = net.ReadEntity()
+    --if mednpc:GetPos():DistToSqr(ply:GetPos()) >= 500*500 then return end
+    if ply:Health() >= ply:GetMaxHealth() then
       DarkRP.notify(ply,1,4,"You already have full HP!")
       return
     end
@@ -42,7 +44,7 @@ if SERVER then
       hp_cost = chef_medic_100
       addHP = 100
     else
-      DarkRP.notify(ply,1,4,"ERROR: Invalid number sent!")
+      print("ERROR: Player '"..ply:Nick().."' sent an invalid number via Chef's Medic NPC! Could be cheating!")
       return
     end
     if not ply:canAfford(hp_cost) then
@@ -85,24 +87,26 @@ end
 
 if ( SERVER ) then return end
 
-chat.AddText("Loaded!")
+surface.CreateFont("ChefsFancyFont", {font = "Tahoma", size = 35, weight = 1000, blursize = 0, scanlines = 0})
 
 function ENT:Draw()
   self:DrawModel()
   local p = self:GetPos()
+  local dist = p:DistToSqr(LocalPlayer():GetPos())
+
+  if (dist > 500*500) then return end
   p.z = p.z + 90
   local ang = self:GetAngles()
   ang:RotateAroundAxis(self:GetAngles():Forward(), 90)
   ang:RotateAroundAxis(self:GetAngles():Up(), 90)
-  ang.y = ang.y + math.cos( CurTime())*100--(CurTime()*50) % 365
-  --p = p  + Vector( 0, 0, math.cos( CurTime() / 2 ) + 20 )
-  cam.Start3D2D(p, ang, 0.4)
+  --ang:RotateAroundAxis(LocalPlayer():GetAngles():Right(),90)
+  
+  cam.Start3D2D(p, Angle(0, LocalPlayer():EyeAngles().y - 90, 90), 0.4)
     local text = "Medic"
-    surface.SetFont( "DermaLarge" )
-    surface.SetDrawColor( 0, 0, 0 )
+    surface.SetFont( "ChefsFancyFont" )
 		local tW, tH = surface.GetTextSize( text )
-    surface.DrawRect( -tW / 2 - 5, -5, tW + 5 * 2, tH + 5 * 2 )
-    draw.DrawText(text, "DermaLarge", -tW/2, 0, Color( 255, 0, 0, 255 ),TEXT_ALIGN_LEFT)
+    --surface.DrawRect( -tW / 2 - 5, -5, tW + 5 * 2, tH + 5 * 2 )
+    draw.DrawText(text, "ChefsFancyFont", -tW/2, 0, Color( 255, 0, 0, 255 ),TEXT_ALIGN_LEFT)
   cam.End3D2D()
 end
 
@@ -120,7 +124,7 @@ net.Receive("chef_medic",function()
   FoodPanel:MakePopup()
   FoodPanel.Paint = function(self, w, h)
     draw.RoundedBox(2, 0, 0, w, h, faded_black)
-    draw.RoundedBox(0, 0, 0, w, 30, Color(0,0,0,150))
+    draw.RoundedBox(0, 0, 0, w, 30, Color(0,0,0,240))
     draw.SimpleText("Medic - Buy Health", "Font", w/2, 15, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
   end
   

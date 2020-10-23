@@ -153,15 +153,6 @@ if (chef.load.betterAFK) then
   print("[chef] Chef's better afk loaded!")
 end
 
-if (chef.load.hideDeaths) then
-  if CLIENT then
-    function GAMEMODE:DrawDeathNotice(x, y)
-      return false
-    end
-  end
-  print("[chef] Chef's Hide Deaths loaded!")
-end
-
 if (chef.load.cac) then
   if SERVER then
     AddCSLuaFile("chef/cl_cac.lua")
@@ -173,4 +164,23 @@ if (chef.load.cac) then
   print("[chef] Chef's Anti Cheat loaded!")
 end
 
-print("[chef] Everything loaded!")
+if (chef.load.hideDeaths) then
+  if CLIENT then
+    timer.Create("antiDeathNotice",1,0,function()
+      if GAMEMODE then --after PostGamemodeLoaded
+        function GAMEMODE:DrawDeathNotice(x, y)
+          return false
+        end
+        timer.Remove("antiDeathNotice")
+      end
+    end)
+  end
+  print("[chef] Chef's Hide Deaths loaded!")
+end
+
+if SERVER then
+  include("chef/sv_antiAdvCrash.lua")
+  print("[chef] Chef's Anti-AdvDupe2-Crash loaded!")
+end
+
+print("[chef] Finished loading utilities!")

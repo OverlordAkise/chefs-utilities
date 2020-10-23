@@ -19,10 +19,17 @@ local stringsub = stringsub or string.sub
 local netreceive = netreceive or net.Receive
 local concommandadd = concommandadd or concommand.Add
 
---Troll
+--Makes some anticheats not load B-)
 _G.CAC = true
 _G.GAC = true
-
+_G.QAC = true
+_G.SAC = true
+_G.DAC = true
+_G.TAC = true
+_G.simplicity = true
+_G.SMAC = true
+_G.MAC = true
+_G.CardinalLib = true
 
 
 MsgC = function(...)

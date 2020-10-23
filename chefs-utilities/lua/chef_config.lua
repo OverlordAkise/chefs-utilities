@@ -28,8 +28,10 @@ chef.groups["operator"] = true
 chef.groups["moderator"] = true
 
 
+
 --Anticheat with Anti-Net-Spam
 --Catches exploit-menus, aimbot, etc.
+--DO NOT HAVE 2 ANTICHEATS AT ONCE!
 chef.load.cac = true
 
 --A new black chatbox which has more features

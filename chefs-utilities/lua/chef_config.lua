@@ -13,6 +13,7 @@
 --without spending any money (It's free!)
 --Source: https://github.com/OverlordAkise/chefs-utilities
 
+
 ------------
 -- CONFIG --
 ------------
@@ -29,14 +30,17 @@ chef.groups["moderator"] = true
 
 
 
+
+
 --Anticheat with Anti-Net-Spam
 --Catches exploit-menus, aimbot, etc.
 --DO NOT HAVE 2 ANTICHEATS AT ONCE!
 chef.load.cac = true
 
 --A new black chatbox which has more features
-chef.load.chatBox = true
-
+--Please install this one instead:
+--https://github.com/Earu/EasyChat
+chef.load.chatBox = false
 chef.chatTags = {
   ["superadmin"] = "[Superadmin]",
   ["admin"] = "[Admin]",
@@ -48,7 +52,9 @@ chef.chatColors = {
 
 
 --Very minimalistic anti-prop-griefing
-chef.load.antiProp = true
+--Please install this one instead:
+--https://github.com/NanoAi/gm_apg
+chef.load.antiProp = false
 
 --make /afk not abuseable with a 5s timer
 --Please also enable the afk module in disabledDefaults.lua
@@ -57,8 +63,8 @@ chef.load.betterAFK = false
 --Pocket Blacklist extended, don't drop pocket contents on death
 chef.load.betterPocket = true
 --Save Pocket if you disconnect, acts like an inventory
---(Can be buggy with specific entities)
-chef.load.keepPocket = true
+--Doesn't work correctly with blues-farmer
+chef.load.keepPocket = false
 
 --Announcement for connect,disconnect,joining players
 chef.load.announce = true
@@ -75,10 +81,10 @@ chef.bhopslow = 100
 --A hand-picked prop blacklist with 1000+ Props!
 chef.load.restrictPropList = true
 
---Should you be able to drop job weapons like the weed tablet
+--Disables dropping job weapons like the weed tablet
 chef.load.restrictDrop = true
 
---Disable the Context Menu (when you hold C)
+--Disable the Context Menu Options (when you hold C)
 chef.load.contextMenu = true
 
 --Automatically disable spawning of ragdolls, dynamite, etc.
@@ -87,7 +93,7 @@ chef.load.maxSettings = true
 --Load FPS boost config (no window, is enabled automatically)
 chef.load.fpsBoost = true
 
---Disable bad toolguns like Zero's Orespawner and Dynamite
+--Disable toolguns like Zero's Orespawner and Dynamite for users
 chef.load.restrictToolgun = true
 
 --Only show Proplist on SpawnMenu
@@ -96,7 +102,7 @@ chef.load.restrictSpawnMenu = true
 --On first join upons a menu that forces you to change your name
 chef.load.forceNameChange = true
 
---Disable car pickup by users
+--Disable car pickup for users
 chef.load.restrictCarPickup = true
 
 --Can teammembers lift up players

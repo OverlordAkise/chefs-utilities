@@ -70,20 +70,21 @@ if ( SERVER ) then return end
 function ENT:Draw()
   self:DrawModel()
   local p = self:GetPos()
-  p.z = p.z + 75
-  p.x = p.x - 10
+  local dist = p:DistToSqr(LocalPlayer():GetPos())
+
+  if (dist > 500*500) then return end
+  p.z = p.z + 90
   local ang = self:GetAngles()
   ang:RotateAroundAxis(self:GetAngles():Forward(), 90)
   ang:RotateAroundAxis(self:GetAngles():Up(), 90)
-  ang.y = ang.y + math.cos( CurTime())*100--(CurTime()*50) % 365
-  --p = p  + Vector( 0, 0, math.cos( CurTime() / 2 ) + 20 )
-  cam.Start3D2D(p, ang, 0.4)
+  --ang:RotateAroundAxis(LocalPlayer():GetAngles():Right(),90)
+  
+  cam.Start3D2D(p, Angle(0, LocalPlayer():EyeAngles().y - 90, 90), 0.4)
     local text = chef_rotate_text
-    surface.SetFont( "DermaLarge" )
+    surface.SetFont( "ChefsFancyFont" )
     surface.SetDrawColor( 0, 0, 0 )
 		local tW, tH = surface.GetTextSize( text )
-    surface.DrawRect( -tW / 2 - 5, -5, tW + 5 * 2, tH + 5 * 2 )
-    draw.DrawText(text, "DermaLarge", -tW/2, 0, Color( 255, 0, 0, 255 ),TEXT_ALIGN_LEFT)
+    draw.DrawText(text, "ChefsFancyFont", -tW/2, 0, Color( 255, 0, 0, 255 ),TEXT_ALIGN_LEFT)
   cam.End3D2D()
 end
 

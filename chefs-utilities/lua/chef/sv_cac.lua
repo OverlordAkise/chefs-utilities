@@ -51,6 +51,7 @@ net.Receive("chef_bestrafe",function(len,ply)
   ChefAC_Punish(ply,0,"[ChefAC] Banned for cheating.")
 end)
 
+--[[
 --Anti Net Spam
 local netIncoming = net.Incoming
 function net.Incoming( len, ply )
@@ -73,5 +74,5 @@ function net.Incoming( len, ply )
   end
   netIncoming(len,ply)
 end
-
---print("[ChefAC] Serverside loaded!")
+--]]
+print("[ChefAC] Serverside loaded!")

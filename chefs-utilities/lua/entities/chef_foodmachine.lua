@@ -45,7 +45,7 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
   
   local p = self:GetPos()
-  p.z = p.z + 55
+  --p.z = p.z + 55
   self:SetPos(p)
   
 	local phys = self:GetPhysicsObject()
@@ -67,25 +67,28 @@ end
 
 if ( SERVER ) then return end
 
+surface.CreateFont( "lucid_food_font", {
+    font = "Roboto Lt",
+    size = 65,
+    weight = 500,
+})
+
 function ENT:Draw()
   self:DrawModel()
-  local p = self:GetPos()
-  local dist = p:DistToSqr(LocalPlayer():GetPos())
+  if LocalPlayer():GetPos():DistToSqr(self:GetPos()) < 550*550 then
+    local a = Angle(0,0,0)
+    a:RotateAroundAxis(Vector(1,0,0),90)
+    a.y = LocalPlayer():GetAngles().y - 90
+    cam.Start3D2D(self:GetPos() + Vector(0,0,60), a , 0.074)
+      draw.RoundedBox(8,-225,-75,450,75 , Color(45,45,45,255))
+      local tri = {{x = -25 , y = 0},{x = 25 , y = 0},{x = 0 , y = 25}}
+      surface.SetDrawColor(Color(45,45,45,255))
+      draw.NoTexture()
+      surface.DrawPoly( tri )
 
-  if (dist > 500*500) then return end
-  p.z = p.z + 90
-  local ang = self:GetAngles()
-  ang:RotateAroundAxis(self:GetAngles():Forward(), 90)
-  ang:RotateAroundAxis(self:GetAngles():Up(), 90)
-  --ang:RotateAroundAxis(LocalPlayer():GetAngles():Right(),90)
-  
-  cam.Start3D2D(p, Angle(0, LocalPlayer():EyeAngles().y - 90, 90), 0.4)
-    local text = chef_rotate_text
-    surface.SetFont( "ChefsFancyFont" )
-    surface.SetDrawColor( 0, 0, 0 )
-		local tW, tH = surface.GetTextSize( text )
-    draw.DrawText(text, "ChefsFancyFont", -tW/2, 0, Color( 255, 0, 0, 255 ),TEXT_ALIGN_LEFT)
-  cam.End3D2D()
+      draw.SimpleText(chef_rotate_text,"lucid_food_font",0,-40,Color(255,255,255,255) , 1 , 1)
+    cam.End3D2D()
+  end
 end
 
 surface.CreateFont("Font", {font = "Arial",extended = false,size = 30,})
@@ -102,7 +105,7 @@ net.Receive("chef_food",function()
   FoodPanel:MakePopup()
   FoodPanel.Paint = function(self, w, h)
     draw.RoundedBox(2, 0, 0, w, h, faded_black)
-    draw.RoundedBox(0, 0, 0, w, 30, Color(0,0,0,150))
+    draw.RoundedBox(0, 0, 0, w, 30, Color(0,0,0,240))
     draw.SimpleText(chef_title, "Font", w/2, 15, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText(chef_top_text, "Font", w/2, h/2 - 90, color_white, TEXT_ALIGN_CENTER)
     draw.SimpleText(chef_food_cost, "Font", w/2, h/2 - 60, color_white, TEXT_ALIGN_CENTER)
@@ -112,14 +115,14 @@ net.Receive("chef_food",function()
   local parent_x, parent_y = FoodPanel:GetSize()
   
   local CloseButton = vgui.Create( "DButton", FoodPanel )
-  CloseButton:SetText( "X" )
+  CloseButton:SetText( "" )
   CloseButton:SetPos( parent_x-30, 0 )
   CloseButton:SetSize( 30, 30 )
   CloseButton.DoClick = function()
     FoodPanel:Close()
   end
   CloseButton.Paint = function(self, w, h)
-    draw.RoundedBox(0, 0, 0, w, h, Color(255,10,10,255))
+    draw.RoundedBox(0, 0, 0, w, h, color_white)
   end
   
   local BuyButton = vgui.Create("DButton", FoodPanel)
